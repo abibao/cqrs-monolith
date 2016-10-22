@@ -14,6 +14,9 @@ module.exports = function (value) {
         .then((entry) => {
           resolve(entry.id)
         })
+        .catch(() => {
+          resolve('none')
+        })
     } else {
       resolve('none')
     }

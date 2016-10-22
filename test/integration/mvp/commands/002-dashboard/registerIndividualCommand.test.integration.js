@@ -49,6 +49,18 @@ describe('[integration] RegisterIndividualCommand', function () {
       })
       .catch(done)
   })
+  it('should register successfully with an unknown hasRegisteredEntity', function (done) {
+    const payload = {
+      email: 'unknown_urn@hasRegisteredEntity.com',
+      hasRegisteredEntity: URN.create('database', 'entity', '0000000000000')
+    }
+    server.execute('RegisterIndividualCommand', payload)
+      .then((result) => {
+        expect(result).to.be.an('object')
+        done()
+      })
+      .catch(done)
+  })
   it('should register successfully with a bad hasRegisteredEntity', function (done) {
     const payload = {
       email: 'bad_urn@hasRegisteredEntity.com',
