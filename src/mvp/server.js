@@ -3,11 +3,10 @@
 const Promise = require('bluebird')
 const path = require('path')
 
-// declare configuration in a global mode
 const config = require('nconf')
 config.argv().env().file({ file: path.resolve(__dirname, 'config-deve.json') })
 
-const rethinkdb = require('./rethinkdb')
+const rethinkdb = require('./libs/rethinkdb')
 
 // declare server
 const Server = require('node-cqrs-framework').Server

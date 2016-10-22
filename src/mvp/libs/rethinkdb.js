@@ -2,9 +2,8 @@
 
 const path = require('path')
 
-// declare configuration in a global mode
 const config = require('nconf')
-config.argv().env().file({ file: path.resolve(__dirname, 'config-deve.json') })
+config.argv().env().file({ file: path.resolve(__dirname, '../config-deve.json') })
 
 const Promise = require('bluebird')
 
@@ -43,9 +42,13 @@ module.exports.structure = function () {
       .then(() => {
         return r.db(config.get('CQRS_RETHINKDB_DB')).tableList().contains('surveys').do(tableExists => r.branch(tableExists, {created: 0}, r.tableCreate('surveys')))
       })
+      .then(() => {
+        return r.db(config.get('CQRS_RETHINKDB_DB')).tableList().contains('entities').do(tableExists => r.branch(tableExists, {created: 0}, r.tableCreate('entities')))
+      })
       .then(resolve)
       .catch(reject)
   })
 }
 module.exports.r = r
 module.exports.service = service
+module.exports.config = config

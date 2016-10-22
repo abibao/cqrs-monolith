@@ -1,5 +1,6 @@
 --timeout 5000
 --use_strict
+--recursive test/rethinkdb.test.js
 --recursive test/standard.test.js
 --recursive test/unit
 --recursive test/integration
