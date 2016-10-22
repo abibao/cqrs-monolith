@@ -1,0 +1,50 @@
+{
+  "name": "cqrs-monolith",
+  "version": "1.0.0",
+  "description": "This project will have all the CQRS (microservices) for Abibao, and we will start what we want.",
+  "main": "index.js",
+  "scripts": {
+    "setup:deve": "./script/setup-deve.sh",
+    "start:mvp": "node ./src/mvp/server.js",
+    "test": "npm run test:coverage",
+    "test:standard": "node_modules/.bin/standard --verbose | snazzy",
+    "test:unit": "node_modules/.bin/_mocha --timeout 5000 --use_strict --recursive test/unit",
+    "test:integration": "node_modules/.bin/_mocha --timeout 5000 --use_strict --recursive test/integration",
+    "test:coverage": "node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- --opts .mocharc"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "3.4.6",
+    "bson": "0.5.6",
+    "conf": "0.11.2",
+    "feathers-errors": "2.4.0",
+    "feathers-query-filters": "2.1.1",
+    "feathers-rethinkdb": "0.2.8",
+    "hoek": "4.1.0",
+    "joi": "9.2.0",
+    "lodash": "4.16.4",
+    "node-cqrs-framework": "file:../node-cqrs-framework",
+    "rethinkdbdash": "2.3.23",
+    "sendgrid": "4.7.0"
+  },
+  "devDependencies": {
+    "chai": "3.5.0",
+    "chance": "1.0.4",
+    "faker": "3.1.0",
+    "istanbul": "0.4.5",
+    "mocha": "3.1.2",
+    "mocha-standard": "1.0.0",
+    "snazzy": "5.0.0",
+    "standard": "8.4.0"
+  },
+  "standard": {
+    "globals": [
+      "describe",
+      "it"
+    ],
+    "ignore": [
+      "coverage/**"
+    ]
+  }
+}

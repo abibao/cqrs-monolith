@@ -1,0 +1,41 @@
+machine:
+
+  environment:
+    CQRS_ENV: test
+    CQRS_RETHINKDB_HOST: localhost
+    CQRS_RETHINKDB_PORT: 28015
+    CQRS_RETHINKDB_DB: test
+    CQRS_RETHINKDB_USER: admin
+    CQRS_RABBITMQ_HOST: localhost
+    CQRS_RABBITMQ_PORT: 5672
+    CQRS_MYSQL_HOST: localhost
+    CQRS_MYSQL_PORT: 3306
+    CQRS_MYSQL_DB: test
+    CQRS_MYSQL_USER: root
+    CQRS_MYSQL_PASSWORD: none
+
+  timezone:
+    Europe/Paris
+
+  node:
+    version: 6.7.0
+
+  services:
+    - docker
+
+dependencies:
+
+  cache_directories:
+    - node_modules
+
+  override:
+    - sh ./script/ci-bootstrap-mysql.sh
+    - sh ./script/ci-bootstrap-rabbitmq.sh
+    - sh ./script/ci-bootstrap-rethinkdb.sh
+
+test:
+
+  override:
+    - npm install
+    - npm prune
+    - npm test
