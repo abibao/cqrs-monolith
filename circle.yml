@@ -25,6 +25,9 @@ machine:
 
 dependencies:
 
+  pre:
+    - sudo apt-get --purge autoremove -y mysql-server-5.6
+    
   cache_directories:
     - node_modules
 
