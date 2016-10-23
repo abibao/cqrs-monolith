@@ -5,14 +5,14 @@ const chai = require('chai')
 const expect = chai.expect
 
 const config = require('nconf')
-config.argv().env().file({ file: path.resolve(__dirname, '../../../../../src/mvp/config-deve.json') })
+config.argv().env().file({ file: path.resolve(__dirname, '../../../../../src/server/config-deve.json') })
 
-const URN = require(path.resolve(__dirname, '../../../../../src/mvp/libs/urn'))
+const URN = require(path.resolve(__dirname, '../../../../../src/server/libs/urn'))
 
 const Server = require('node-cqrs-framework').Server
 const server = new Server({
   config,
-  source: path.resolve(__dirname, '../../../../../src/mvp'),
+  source: path.resolve(__dirname, '../../../../../src/server'),
   patterns: ['queries/dashboard/verifyRegisteredEntityQuery.js']
 })
 

@@ -4,8 +4,8 @@ const Promise = require('bluebird')
 
 const path = require('path')
 
-const structure = require(path.resolve(__dirname, '../src/mvp/libs/rethinkdb')).structure
-const r = require(path.resolve(__dirname, '../src/mvp/libs/rethinkdb')).r
+const structure = require(path.resolve(__dirname, '../src/server/libs/rethinkdb')).structure
+const r = require(path.resolve(__dirname, '../src/server/libs/rethinkdb')).r
 
 describe('rethinkdb prepare', function () {
   it('should create tables', function (done) {

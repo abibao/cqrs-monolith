@@ -4,7 +4,7 @@ const path = require('path')
 const chai = require('chai')
 const expect = chai.expect
 
-const URN = require(path.resolve(__dirname, '../src/mvp/libs/urn'))
+const URN = require(path.resolve(__dirname, '../src/server/libs/urn'))
 
 describe('coverage maximum', function () {
   it('should create a new database/entity urn', function (done) {

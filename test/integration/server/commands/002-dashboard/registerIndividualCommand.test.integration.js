@@ -4,13 +4,13 @@ const path = require('path')
 const chai = require('chai')
 const expect = chai.expect
 
-const rethinkdb = require(path.resolve(__dirname, '../../../../../src/mvp/libs/rethinkdb'))
-const URN = require(path.resolve(__dirname, '../../../../../src/mvp/libs/urn'))
+const rethinkdb = require(path.resolve(__dirname, '../../../../../src/server/libs/rethinkdb'))
+const URN = require(path.resolve(__dirname, '../../../../../src/server/libs/urn'))
 
 const Server = require('node-cqrs-framework').Server
 const server = new Server({
   config: rethinkdb.config,
-  source: path.resolve(__dirname, '../../../../../src/mvp'),
+  source: path.resolve(__dirname, '../../../../../src/server'),
   patterns: [
     'commands/dashboard/registerIndividualCommand.js',
     'queries/dashboard/verifyRegisteredEntityQuery.js',

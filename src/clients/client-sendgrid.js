@@ -3,7 +3,7 @@
 const path = require('path')
 
 const config = require('nconf')
-config.argv().env().file({ file: path.resolve(__dirname, 'mvp/config-deve.json') })
+config.argv().env().file({ file: path.resolve(__dirname, '../server/config-deve.json') })
 
 const Client = require('node-cqrs-framework').Client
 const client = new Client()
