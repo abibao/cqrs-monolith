@@ -1,19 +1,5 @@
 machine:
 
-  environment:
-    CQRS_ENV: test
-    CQRS_RETHINKDB_HOST: localhost
-    CQRS_RETHINKDB_PORT: 28015
-    CQRS_RETHINKDB_DB: test
-    CQRS_RETHINKDB_USER: admin
-    CQRS_RABBITMQ_HOST: localhost
-    CQRS_RABBITMQ_PORT: 5672
-    CQRS_MYSQL_HOST: localhost
-    CQRS_MYSQL_PORT: 3306
-    CQRS_MYSQL_DB: test
-    CQRS_MYSQL_USER: root
-    CQRS_MYSQL_PASSWORD: none
-
   timezone:
     Europe/Paris
 
@@ -33,9 +19,10 @@ dependencies:
     - node_modules
 
   override:
-    - sh ./script/ci-bootstrap-mysql.sh
-    - sh ./script/ci-bootstrap-rabbitmq.sh
-    - sh ./script/ci-bootstrap-rethinkdb.sh
+    - set -e
+    - sh ./docker-scripts/ci-bootstrap-container.sh "mysql" "test_mysql" "-p 3306:3306 -e MYSQL_ROOT_PASSWORD=none" "library/mysql:5"
+    - sh ./docker-scripts/ci-bootstrap-container.sh "rabbitmq" "test_rabbitmq" "-p 5672:5672 -p 15672:15672 -e RABBITMQ_PASS=none" "tutum/rabbitmq:latest"
+    - sh ./docker-scripts/ci-bootstrap-container.sh "rethinkdb" "test_rethinkdb" "-p 29015:29015 -p 28015:28015 -p 8080:8080" "library/rethinkdb"
 
 test:
 

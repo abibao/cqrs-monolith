@@ -5,7 +5,7 @@ const chai = require('chai')
 const expect = chai.expect
 
 const config = require('nconf')
-config.argv().env().file({ file: path.resolve(__dirname, '../../../../../src/server/config-deve.json') })
+config.argv().env().file({file: 'config-deve.json'})
 
 const URN = require(path.resolve(__dirname, '../../../../../src/server/libs/urn'))
 

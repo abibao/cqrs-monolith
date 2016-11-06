@@ -43,11 +43,12 @@ module.exports = function (payload) {
         if (typeof hasRegisteredEntity === 'object') {
           payload.hasRegisteredEntity = hasRegisteredEntity.result
         }
-        const service = new Service('individuals')
+        // register a new individual
         payload.id = new ObjectId().toString()
         payload.scope = 'individual'
         payload.createdAt = new Date()
         payload.modifiedAt = new Date()
+        const service = new Service('individuals')
         service.create(payload).then(resolve).catch(reject)
       })
       .catch(reject)

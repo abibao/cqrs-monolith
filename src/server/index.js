@@ -4,14 +4,17 @@ const Promise = require('bluebird')
 const path = require('path')
 
 const config = require('nconf')
-config.argv().env().file({ file: path.resolve(__dirname, 'config-deve.json') })
-
-const rethinkdb = require('./libs/rethinkdb')
+config.argv().env().file({ file: 'config-deve.json' })
 
 // declare server
 const Server = require('node-cqrs-framework').Server
 const server = new Server({
-  config,
+  bus: {
+    host: config.get('CQRS_RABBITMQ_HOST'),
+    port: config.get('CQRS_RABBITMQ_PORT'),
+    user: config.get('CQRS_RABBITMQ_USER'),
+    pass: config.get('CQRS_RABBITMQ_PASS')
+  },
   source: path.resolve(__dirname),
   patterns: [
     'commands/**/*.js',
@@ -20,7 +23,7 @@ const server = new Server({
 })
 
 // start server
-Promise.all([rethinkdb.structure(), server.initialize()])
+Promise.all([server.initialize()])
   .then(() => {
     console.log('server has initialized')
   })

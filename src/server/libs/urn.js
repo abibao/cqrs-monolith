@@ -1,13 +1,12 @@
 'use strict'
 
-const path = require('path')
-const _ = require('lodash')
-
 const config = require('nconf')
-config.argv().env().file({ file: path.resolve(__dirname, '../config-deve.json') })
+config.argv().env().file({ file: 'config-deve.json' })
 
 const Cryptr = require('cryptr')
 const cryptr = new Cryptr(config.get('CQRS_AUTH_JWT_KEY'))
+
+const _ = require('lodash')
 
 module.exports.create = function (type, name, value) {
   return 'urn:abibao:' + type + ':' + name + ':' + cryptr.encrypt(value)

@@ -1,11 +1,7 @@
 'use strict'
 
-const path = require('path')
-
 const config = require('nconf')
-config.argv().env().file({ file: path.resolve(__dirname, '../config-deve.json') })
-
-const Promise = require('bluebird')
+config.argv().env().file({ file: 'config-deve.json' })
 
 const rethink = require('rethinkdbdash')
 const Service = require('feathers-rethinkdb')
@@ -32,23 +28,6 @@ const service = function (table) {
   })
 }
 
-module.exports.structure = function () {
-  return new Promise((resolve, reject) => {
-    r.dbList().contains(config.get('CQRS_RETHINKDB_DB'))
-      .do(dbExists => r.branch(dbExists, {created: 0}, r.dbCreate(config.get('CQRS_RETHINKDB_DB')))).run()
-      .then(() => {
-        return r.db(config.get('CQRS_RETHINKDB_DB')).tableList().contains('individuals').do(tableExists => r.branch(tableExists, {created: 0}, r.tableCreate('individuals')))
-      })
-      .then(() => {
-        return r.db(config.get('CQRS_RETHINKDB_DB')).tableList().contains('surveys').do(tableExists => r.branch(tableExists, {created: 0}, r.tableCreate('surveys')))
-      })
-      .then(() => {
-        return r.db(config.get('CQRS_RETHINKDB_DB')).tableList().contains('entities').do(tableExists => r.branch(tableExists, {created: 0}, r.tableCreate('entities')))
-      })
-      .then(resolve)
-      .catch(reject)
-  })
-}
 module.exports.r = r
 module.exports.service = service
 module.exports.config = config

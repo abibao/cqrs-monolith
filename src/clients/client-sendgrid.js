@@ -1,21 +1,19 @@
 'use strict'
 
-const path = require('path')
-
 const config = require('nconf')
-config.argv().env().file({ file: path.resolve(__dirname, '../server/config-deve.json') })
+config.argv().env().file({ file: 'config-deve.json' })
 
 const Client = require('node-cqrs-framework').Client
-const client = new Client()
+const client = new Client({
+  bus: {
+    host: config.get('CQRS_RABBITMQ_HOST'),
+    port: config.get('CQRS_RABBITMQ_PORT'),
+    user: config.get('CQRS_RABBITMQ_USER'),
+    pass: config.get('CQRS_RABBITMQ_PASS')
+  }
+})
 
 const handlerSuccess = function () {
-  // 1) client subscribe to the events
-  client.subscribe('SendEmailFromSendgridCommand.Success')
-  client.subscribe('SendEmailFromSendgridCommand.Error')
-  // 2) client.trigger will handler when a event is capture
-  client.trigger.on('SendEmailFromSendgridCommand.Success', handlerOnSuccess)
-  client.trigger.on('SendEmailFromSendgridCommand.Error', handlerOnError)
-  // 3 client.send
   const payload = {
     'personalizations': [
       { 'to': [ { 'email': 'gperreymond@gmail.com' } ],
@@ -50,4 +48,9 @@ const handlerOnError = function (error) {
   process.exit(1)
 }
 
-client.initialize().then(handlerSuccess).catch(handlerError)
+client
+  .subscribe('SendEmailFromSendgridCommand.Success', handlerOnSuccess)
+  .subscribe('SendEmailFromSendgridCommand.Error', handlerOnError)
+  .initialize()
+  .then(handlerSuccess)
+  .catch(handlerError)
