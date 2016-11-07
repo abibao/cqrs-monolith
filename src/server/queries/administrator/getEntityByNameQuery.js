@@ -2,7 +2,7 @@
 
 const Promise = require('bluebird')
 
-const Service = require('./../../libs/rethinkdb').service
+const Service = require('./../../../libs/rethinkdb').service
 
 module.exports = function (name) {
   return new Promise((resolve, reject) => {

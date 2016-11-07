@@ -1,10 +1,9 @@
 'use strict'
 
-const Promise = require('bluebird')
-const path = require('path')
-
 const config = require('nconf')
 config.argv().env().file({ file: 'config-deve.json' })
+
+const path = require('path')
 
 // declare server
 const Server = require('node-cqrs-framework').Server
@@ -23,7 +22,7 @@ const server = new Server({
 })
 
 // start server
-Promise.all([server.initialize()])
+server.initialize()
   .then(() => {
     console.log('server has initialized')
   })

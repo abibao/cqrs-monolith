@@ -6,9 +6,9 @@ const Joi = require('joi')
 var bson = require('bson')
 var ObjectId = bson.ObjectId
 
-const Service = require('./../../libs/rethinkdb').service
+const Service = require('./../../../libs/rethinkdb').service
 const Client = require('node-cqrs-framework').Client
-const config = require('./../../libs/rethinkdb').config
+const config = require('./../../../libs/rethinkdb').config
 const validate = Promise.promisify(Joi.validate)
 
 const schema = Joi.object().keys({

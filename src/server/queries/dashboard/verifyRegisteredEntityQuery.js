@@ -2,8 +2,8 @@
 
 const Promise = require('bluebird')
 
-const URN = require('./../../libs/urn')
-const Service = require('./../../libs/rethinkdb').service
+const URN = require('./../../../libs/urn')
+const Service = require('./../../../libs/rethinkdb').service
 
 module.exports = function (value) {
   return new Promise((resolve) => {

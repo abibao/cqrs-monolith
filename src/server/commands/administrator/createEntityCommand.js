@@ -6,7 +6,7 @@ const Joi = require('joi')
 var bson = require('bson')
 var ObjectId = bson.ObjectId
 
-const Service = require('./../../libs/rethinkdb').service
+const Service = require('./../../../libs/rethinkdb').service
 
 const schema = Joi.object().keys({
   name: Joi.string().required(),

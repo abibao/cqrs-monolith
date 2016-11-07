@@ -1,6 +1,6 @@
 {
   "name": "cqrs-monolith",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "This project will have all the CQRS (microservices) for Abibao.",
   "main": "index.js",
   "scripts": {
@@ -18,13 +18,12 @@
     "bluebird": "3.4.6",
     "bson": "0.5.6",
     "cryptr": "2.0.0",
-    "feathers-errors": "2.5.0",
     "feathers-query-filters": "2.1.1",
     "feathers-rethinkdb": "0.2.8",
     "hoek": "4.1.0",
     "joi": "9.2.0",
     "lodash": "4.16.6",
-    "nconf": "^0.8.4",
+    "nconf": "0.8.4",
     "node-cqrs-framework": "0.2.2",
     "rethinkdbdash": "2.3.25",
     "sendgrid": "4.7.1"
