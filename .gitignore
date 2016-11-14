@@ -2,6 +2,7 @@
 logs
 *.log
 npm-debug.log*
+old
 
 # Configuration
 config-deve.json

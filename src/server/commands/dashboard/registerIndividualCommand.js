@@ -1,14 +1,16 @@
 'use strict'
 
+var config = require('nconf')
+config.argv().env().file({ file: 'nconf-deve.json' })
+
 const Promise = require('bluebird')
 const Joi = require('joi')
 
 var bson = require('bson')
 var ObjectId = bson.ObjectId
 
-const Service = require('./../../../libs/rethinkdb').service
-const Client = require('node-cqrs-framework').Client
-const config = require('./../../../libs/rethinkdb').config
+const ServiceHelper = require('./../../../helpers/feathers-service')
+// const Client = require('node-cqrs-framework').Client
 const validate = Promise.promisify(Joi.validate)
 
 const schema = Joi.object().keys({
@@ -19,19 +21,21 @@ const schema = Joi.object().keys({
 
 module.exports = function (payload) {
   return new Promise((resolve, reject) => {
-    const client = new Client({
+    /* const client = new Client({
       host: config.get('CQRS_RABBITMQ_HOST'),
-      port: config.get('CQRS_RABBITMQ_PORT')
-    })
+      port: config.get('CQRS_RABBITMQ_PORT'),
+      user: config.get('CQRS_RABBITMQ_USER'),
+      pass: config.get('CQRS_RABBITMQ_PASS')
+    }) */
     validate(payload, schema)
-      .then(() => {
-        // start client
+      /* .then(() => {
         return client.initialize()
-      })
+      }) */
       .then(() => {
         // validate hasRegisteredEntity is exists
         if (payload.hasRegisteredEntity) {
-          return client.request('VerifyRegisteredEntityQuery', payload.hasRegisteredEntity)
+          return 'none'
+          // return client.request('VerifyRegisteredEntityQuery', payload.hasRegisteredEntity)
         } else {
           return 'none'
         }
@@ -48,7 +52,7 @@ module.exports = function (payload) {
         payload.scope = 'individual'
         payload.createdAt = new Date()
         payload.modifiedAt = new Date()
-        const service = new Service('individuals')
+        const service = ServiceHelper.initialize(ServiceHelper.RETHINKDB_CONNECTION, config.get('CQRS_RETHINKDB_DATABASE_MVP'), 'individuals')
         service.create(payload).then(resolve).catch(reject)
       })
       .catch(reject)
